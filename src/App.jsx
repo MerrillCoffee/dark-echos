@@ -1,3 +1,55 @@
+import { episodeList } from "./data";
+import {useState} from "react"
+
 export default function App() {
-  // TODO
+  const [episodes] = useState(episodeList);
+  const [selectedEpisode, setSelectedEpisode] = useState();
+
+  //gives details of selected episode
+  function EpisodeDetails() {
+    if(!selectedEpisode) {
+      return (
+        <selection className="details">
+          <h2>Episode Details</h2>
+          <p>Select an episode to learn more!</p>
+        </selection>
+      );
+    }
+
+    return (
+        <section className="details">
+          <h1>Episode {selectedEpisode.id}</h1>
+          <h2>{selectedEpisode.name}</h2>
+          <p>{selectedEpisode.description}</p>
+          <button>Watch now</button>
+        </section>
+    );
+  }
+
+//gives you the list of episodes
+function EpisodeList() {
+  return (
+    <section className="episode-list">
+      <h2>Episodes</h2>
+      <ul className="episode-list">
+        {episodes.map((episode) => (
+          <li key={episode.id} onClick={() => setSelectedEpisode(episode)}>
+            {episode.title}
+          </li>))}
+      </ul>
+    </section>
+  )
+}
+
+  return (
+    <>
+      <header>
+        <h1>Dark Echoes</h1>
+      </header>
+      <main>
+        <EpisodeList />
+        <EpisodeDetails />
+      </main>
+    </>
+  )
 }
